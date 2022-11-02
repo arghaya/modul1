@@ -44,4 +44,13 @@ pipeline {
         }
       }
     }
+    stage('deploy to app host') {
+     steps{  
+         script {
+          sshagent(['my-ssh-key']) {
+            sh 'ssh -o StrictHostKeyChecking=no ubuntu@2ndserver && cd /home/ubuntu/ && sudo touch test-file && docker pull 111559910807.dkr.ecr.us-east-1.amazonaws.com/module1:latest'
+         }
+        }
+      }
+    }
 }
