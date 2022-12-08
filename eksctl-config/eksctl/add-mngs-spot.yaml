@@ -1,0 +1,66 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+managedNodeGroups:
+- name: mng-spot-4vcpu-16gb
+  amiFamily: AmazonLinux2
+  desiredCapacity: 1
+  minSize: 0
+  maxSize: 4
+  spot: true
+  instanceTypes:
+  - t3a.large
+  iam:
+    withAddonPolicies:
+      autoScaler: true
+      cloudWatch: true
+      albIngress: true
+  privateNetworking: true
+  taints:
+    - key: spotInstance
+      value: "true"
+      effect: PreferNoSchedule
+  labels:
+    alpha.eksctl.io/cluster-name: arghaya
+    alpha.eksctl.io/nodegroup-name: mng-spot-4vcpu-16gb
+    intent: apps
+  tags:
+    alpha.eksctl.io/nodegroup-name: mng-spot-4vcpu-16gb
+    alpha.eksctl.io/nodegroup-type: managed
+    k8s.io/cluster-autoscaler/node-template/label/intent: apps
+    k8s.io/cluster-autoscaler/node-template/taint/spotInstance: "true:PreferNoSchedule"
+
+- name: mng-spot-8vcpu-32gb
+  amiFamily: AmazonLinux2
+  desiredCapacity: 1
+  minSize: 0
+  maxSize: 2
+  spot: true
+  instanceTypes:
+  - t3a.large
+  iam:
+    withAddonPolicies:
+      autoScaler: true
+      cloudWatch: true
+      albIngress: true
+  privateNetworking: true
+  taints:
+    - key: spotInstance
+      value: "true"
+      effect: PreferNoSchedule
+  labels:
+    alpha.eksctl.io/cluster-name: arghaya
+    alpha.eksctl.io/nodegroup-name: mng-spot-8vcpu-32gb
+    intent: apps
+  tags:
+    alpha.eksctl.io/nodegroup-name: mng-spot-8vcpu-32gb
+    alpha.eksctl.io/nodegroup-type: managed
+    k8s.io/cluster-autoscaler/node-template/label/intent: apps
+    k8s.io/cluster-autoscaler/node-template/taint/spotInstance: "true:PreferNoSchedule"
+
+metadata:
+  name: arghaya
+  region: us-east-1
+  version: "1.23"
+

@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis-cli
+  namespace: demo
+spec:
+  selector:
+    app: redis-cli
+  type: ClusterIP
+  ports:
+  - name: app-port
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
